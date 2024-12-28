@@ -1,13 +1,11 @@
-
 from rest_framework import generics
-from rest_framework.response import Response
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
 
 from library.models import Author, Book, Order, Genre
 from library.paginators import LibraryPaginator
 from library.serializers import AuthorSerializer, BookSerializer, OrderSerializer, \
-    GenreSerializer, OrderCreateSerializer, OrderFinishSerializer
+    GenreSerializer, OrderCreateSerializer
 from users.permissions import UserIsModeratorPermission, UserIsStaffPermission, IsOwnerPermission
 
 
@@ -26,15 +24,10 @@ class AuthorDestroyAPIView(generics.DestroyAPIView):
     queryset = Author.objects.all()
     # permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
 
+
 class AuthorCreateAPIView(generics.CreateAPIView):
     serializer_class = AuthorSerializer
     # permission_classes = [IsAuthenticated, UserIsModeratorPermission | UserIsStaffPermission]
-
-
-class AuthorDestroyAPIView(generics.DestroyAPIView):
-    serializer_class = AuthorSerializer
-    queryset = Author.objects.all()
-    # permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
 
 
 class AuthorListAPIView(generics.ListAPIView):
@@ -90,11 +83,12 @@ class BookUpdateAPIView(generics.UpdateAPIView):
 
 class OrderCreateAPIView(generics.CreateAPIView):
     serializer_class = OrderCreateSerializer
-    # permission_classes = [IsAuthenticated,]
+    permission_classes = [IsAuthenticated,]
 
     def perform_create(self, serializer):
         order = serializer.save()
-        # order.user = self.request.user
+        if not order.user:
+            order.user = self.request.user
         book_pk = order.book.pk
         book = Book.objects.filter(pk=book_pk).first()
         book.quantity -= 1
@@ -106,6 +100,7 @@ class OrderUpdateAPIView(generics.UpdateAPIView):
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
     # permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
+
 
 class OrderFinishPIView(generics.UpdateAPIView):
     serializer_class = OrderSerializer
