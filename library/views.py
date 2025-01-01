@@ -11,53 +11,53 @@ from users.permissions import UserIsModeratorPermission, UserIsStaffPermission, 
 
 class GenreCreateAPIView(generics.CreateAPIView):
     serializer_class = GenreSerializer
-    # permission_classes = [IsAuthenticated, UserIsModeratorPermission | UserIsStaffPermission]
+    permission_classes = [IsAuthenticated, UserIsModeratorPermission | UserIsStaffPermission]
 
 class GenreDestroyAPIView(generics.DestroyAPIView):
     serializer_class = GenreSerializer
     queryset = Genre.objects.all()
-    # permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
+    permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
 
 
 class AuthorDestroyAPIView(generics.DestroyAPIView):
     serializer_class = AuthorSerializer
     queryset = Author.objects.all()
-    # permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
+    permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
 
 
 class AuthorCreateAPIView(generics.CreateAPIView):
     serializer_class = AuthorSerializer
-    # permission_classes = [IsAuthenticated, UserIsModeratorPermission | UserIsStaffPermission]
+    permission_classes = [IsAuthenticated, UserIsModeratorPermission | UserIsStaffPermission]
 
 
 class AuthorListAPIView(generics.ListAPIView):
     serializer_class = AuthorSerializer
     queryset = Author.objects.all()
     pagination_class = LibraryPaginator
-    # permission_classes = [IsAuthenticated,]
+    permission_classes = [IsAuthenticated,]
 
 
 class AuthorRetrieveAPIView(generics.RetrieveAPIView):
     serializer_class = AuthorSerializer
     queryset = Author.objects.all()
-    # permission_classes = [IsAuthenticated,]
+    permission_classes = [IsAuthenticated,]
 
 
 class AuthorUpdateAPIView(generics.UpdateAPIView):
     serializer_class = AuthorSerializer
     queryset = Author.objects.all()
-    # permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
+    permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
 
 
 class BookCreateAPIView(generics.CreateAPIView):
     serializer_class = BookSerializer
-    # permission_classes = [IsAuthenticated, UserIsModeratorPermission | UserIsStaffPermission]
+    permission_classes = [IsAuthenticated, UserIsModeratorPermission | UserIsStaffPermission]
 
 
 class BookDestroyAPIView(generics.DestroyAPIView):
     serializer_class = BookSerializer
     queryset = Book.objects.all()
-    # permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
+    permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
 
 
 class BookListAPIView(generics.ListAPIView):
@@ -66,19 +66,19 @@ class BookListAPIView(generics.ListAPIView):
     filter_backends = [SearchFilter,]
     search_fields = ['name', 'author', 'genre']
     pagination_class = LibraryPaginator
-    # permission_classes = [IsAuthenticated, ]
+    permission_classes = [IsAuthenticated, ]
 
 
 class BookRetrieveAPIView(generics.RetrieveAPIView):
     serializer_class = BookSerializer
     queryset = Book.objects.all()
-    # permission_classes = [IsAuthenticated, ]
+    permission_classes = [IsAuthenticated, ]
 
 
 class BookUpdateAPIView(generics.UpdateAPIView):
     serializer_class = BookSerializer
     queryset = Book.objects.all()
-    # permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
+    permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
 
 
 class OrderCreateAPIView(generics.CreateAPIView):
@@ -99,13 +99,13 @@ class OrderCreateAPIView(generics.CreateAPIView):
 class OrderUpdateAPIView(generics.UpdateAPIView):
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
-    # permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
+    permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
 
 
 class OrderFinishPIView(generics.UpdateAPIView):
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
-    # permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
+    permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
 
     def perform_update(self, serializer):
         instance = serializer.save()
@@ -120,17 +120,17 @@ class OrderFinishPIView(generics.UpdateAPIView):
 class OrderRetrieveAPIView(generics.RetrieveAPIView):
     serializer_class = OrderSerializer
     queryset = Book.objects.all()
-    # permission_classes = [IsAuthenticated, IsOwnerPermission | UserIsStaffPermission | UserIsModeratorPermission]
+    permission_classes = [IsAuthenticated, IsOwnerPermission | UserIsStaffPermission | UserIsModeratorPermission]
 
 
 class OrderListAPIView(generics.ListAPIView):
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
     pagination_class = LibraryPaginator
-    # permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
+    permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
 
 
 class OrderDestroyAPIView(generics.DestroyAPIView):
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
-    # permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
+    permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
