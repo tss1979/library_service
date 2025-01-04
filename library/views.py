@@ -89,10 +89,8 @@ class OrderCreateAPIView(generics.CreateAPIView):
         order = serializer.save()
         if not order.user:
             order.user = self.request.user
-        book_pk = order.book.pk
-        book = Book.objects.filter(pk=book_pk).first()
-        book.quantity -= 1
-        book.save()
+        order.book.quantity -= 1
+        order.book.save()
         order.save()
 
 
@@ -108,13 +106,10 @@ class OrderFinishPIView(generics.UpdateAPIView):
     permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
 
     def perform_update(self, serializer):
-        instance = serializer.save()
-        instance.is_returned = True
-        book_pk = self.get_object().book.pk
-        book = Book.objects.filter(pk=book_pk).first()
-        book.quantity += 1
-        book.save()
-        super().perform_update(instance)
+        order = serializer.save(is_returned=True)
+        order.book.quantity += 1
+        order.book.save()
+        super().perform_update(order)
 
 
 class OrderRetrieveAPIView(generics.RetrieveAPIView):
