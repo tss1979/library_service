@@ -183,3 +183,12 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8000/admin",
 ]
 
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Library Service",
+    "VERSION": "0.0.1",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "SWAGGER_UI_SETTINGS": {
+        "filter": True,
+    },
+    "COMPONENT_SPLIT_REQUEST": True
+}

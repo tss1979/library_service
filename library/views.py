@@ -1,5 +1,5 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
-from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
 
 from library.models import Author, Book, Order, Genre
@@ -11,7 +11,7 @@ from users.permissions import UserIsModeratorPermission, UserIsStaffPermission, 
 
 class GenreCreateAPIView(generics.CreateAPIView):
     serializer_class = GenreSerializer
-    permission_classes = [IsAuthenticated, UserIsModeratorPermission | UserIsStaffPermission]
+    permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission ]
 
 class GenreDestroyAPIView(generics.DestroyAPIView):
     serializer_class = GenreSerializer
@@ -27,7 +27,7 @@ class AuthorDestroyAPIView(generics.DestroyAPIView):
 
 class AuthorCreateAPIView(generics.CreateAPIView):
     serializer_class = AuthorSerializer
-    permission_classes = [IsAuthenticated, UserIsModeratorPermission | UserIsStaffPermission]
+    permission_classes = [IsAuthenticated, UserIsStaffPermission| UserIsModeratorPermission ]
 
 
 class AuthorListAPIView(generics.ListAPIView):
@@ -51,7 +51,7 @@ class AuthorUpdateAPIView(generics.UpdateAPIView):
 
 class BookCreateAPIView(generics.CreateAPIView):
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated, UserIsModeratorPermission | UserIsStaffPermission]
+    permission_classes = [IsAuthenticated, UserIsStaffPermission | UserIsModeratorPermission]
 
 
 class BookDestroyAPIView(generics.DestroyAPIView):
@@ -63,8 +63,8 @@ class BookDestroyAPIView(generics.DestroyAPIView):
 class BookListAPIView(generics.ListAPIView):
     serializer_class = BookSerializer
     queryset = Book.objects.all()
-    filter_backends = [SearchFilter,]
-    search_fields = ['name', 'author', 'genre']
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['name', 'author', 'genre']
     pagination_class = LibraryPaginator
     permission_classes = [IsAuthenticated, ]
 
